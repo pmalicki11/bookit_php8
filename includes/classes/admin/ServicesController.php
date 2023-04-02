@@ -105,7 +105,7 @@ class ServicesController extends DashboardController {
 			$errors['title'] = __('Title is required');
 		}
 
-		if ( count($errors ) > 0 ) {
+		if ( is_countable($errors) && count($errors) > 0 ) {
 			wp_send_json_error( ['errors' => $errors, 'message' => __('Error occurred!', 'bookit')] );
 		}
 	}

@@ -50,7 +50,7 @@ class AppointmentController {
 			}
 		}
 
-		if ( $settings['booking_type'] == 'guest' ) {
+		if ( $settings['booking_type'] === 'guest' ) {
 			if ( !$data['email'] && !$data['phone'] ) {
 				$errors['phone'] = __("Please enter email or phone");
 			}
@@ -91,7 +91,7 @@ class AppointmentController {
 			$errors['payment_method'] = __('Please choose correct payment method');
 		}
 
-		if ( count($errors ) > 0 ) {
+		if ( is_countable($errors) && count($errors ) > 0 ) {
 			wp_send_json_error( ['errors' => $errors] );
 		}
 	}

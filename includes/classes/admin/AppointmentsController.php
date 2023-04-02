@@ -415,7 +415,7 @@ class AppointmentsController extends DashboardController {
 			}
 		}
 
-		if ( count( $errors ) > 0 ) {
+		if ( is_countable($errors) && count( $errors ) > 0 ) {
 			wp_send_json_error( array( 'errors' => $errors ) );
 		}
 	}

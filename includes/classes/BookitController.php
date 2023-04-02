@@ -100,16 +100,16 @@ class BookitController {
             }
         }
 
-        if ( ! empty( $user->ID ) ) {
+        if ( $user !== null && ! empty( $user->ID ) ) {
             $user = (object) array_merge( (array) $user->data, [ 'customer' => Customers::get('wp_user_id', $user->ID) ] );
         }
 
-        if ( count( $categories ) <= 1 ) {
+        if ( is_countable($categories) && count( $categories ) <= 1 ) {
             $key = array_search('category', array_column($navigation, 'key'));
             array_splice($navigation, $key, 1);
         }
 
-        if ( ! empty( $service_id ) || ( count( $services ) == 1 && ( count( $categories ) == 1 || ! empty( $category_id ) ) ) ) {
+        if (!empty($service_id) || ((is_countable($services) && count($services) == 1) && ((is_countable($categories) && count($categories) == 1) || !empty($category_id)))) {
             $key = array_search('service', array_column($navigation, 'key'));
             array_splice($navigation, $key, 1);
         }

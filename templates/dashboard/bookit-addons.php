@@ -2,8 +2,8 @@
     <div class="container">
         <div class="addon-header">
             <div class="bookit-icon"></div>
-            <div class="title"><?php echo $translations['addons_title'];?></div>
-            <div class="description"><?php echo $translations['addons_description'];?></div>
+            <div class="title"><?= $translations['addons_title'] ?></div>
+            <div class="description"><?= $translations['addons_description'] ?></div>
         </div>
         <div class="addon-content">
             <div class="pricing">
@@ -17,29 +17,29 @@
             <div class="addon-list">
                 
                 <?php foreach ( $freemius_info as $addon => $data ) : ?>
-                    <div class="addon <?php echo $addon;?>">
+                    <div class="addon <?= $addon ?>">
 	                    <?php
                         $activePlan = current(array_filter($data['plan'], function($p) { return $p->active==true; }));
 	                    $activePlan = $activePlan ? clone($activePlan) : $activePlan;
 	                    ?>
-                        <?php if ( $addon == 'bookit-all-addons' ):?>
+                        <?php if ( $addon === 'bookit-all-addons' ):?>
                         <span class="popular">
                             <i class="popular-icon"></i>
-                            <?php echo $translations['popular'];?>
+                            <?= $translations['popular']?>
                         </span>
                         <?php endif;?>
 
                         <div class="icons">
                             <i class="icon"></i>
                         </div>
-                        <h2 class="title"><?php echo $data['title'];?></h2>
-                        <div class="price <?php echo $addon;?>" >
+                        <h2 class="title"><?= $data['title'];?></h2>
+                        <div class="price <?= $addon ?>" >
 
                             <?php if ( $activePlan ):?>
 	                            <?php
                                     $existPlans = ['lifetime' => [], 'annual' => []];
                                     $price = ($activePlan->is_lifetime) ? $activePlan->lifetime_price : $activePlan->annual_price;
-	                                if ( $activePlan->is_lifetime == false ):
+	                                if ( $activePlan->is_lifetime == false ) {
 			                            $existPlans['lifetime'] = $data['plan'];
 			                            $existPlans['annual']   = array_map( function ($plan) use ($activePlan) {
 				                            if ( (int)$plan->licenses >= (int)$activePlan->licenses ) {
@@ -48,9 +48,9 @@
 				                                return;
                                             }
 			                            }, $data['plan']);
-		                            endif;
+		                            }
 
-		                            if ( $activePlan->is_lifetime == true ):
+		                            if ( $activePlan->is_lifetime == true ) {
 			                            $existPlans['annual']   = [];
 			                            $existPlans['lifetime'] = array_map( function ($plan) use ($activePlan ) {
 				                            if ( (int)$plan->licenses >= $activePlan->licenses ) {
@@ -59,23 +59,23 @@
 				                                return;
                                             }
 			                            }, $data['plan']);
-		                            endif;
+		                            }
 	                            ?>
 	                            <?php foreach ( $data['plan'] as $plan ) : ?>
-                                    <p class="<?php echo $plan->licenses;?> <?php echo ($plan->licenses == $activePlan->licenses && $plan->is_lifetime == $activePlan->is_lifetime) ? 'active active-plan current-plan':'hidden'; ?>"
-                                       data-lifetime="<?php echo $activePlan->is_lifetime;?>"
-                                       data-licenses="<?php echo $activePlan->licenses;?>"
-                                       data-price="<?php echo $activePlan->is_lifetime ? $activePlan->lifetime_price: $activePlan->annual_price;?>"
-                                       data-license-text="<?php echo $activePlan->data['text'];?>">
+                                    <p class="<?= $plan->licenses ?> <?= ($plan->licenses == $activePlan->licenses && $plan->is_lifetime == $activePlan->is_lifetime) ? 'active active-plan current-plan':'hidden' ?>"
+                                       data-lifetime="<?= $activePlan->is_lifetime ?>"
+                                       data-licenses="<?= $activePlan->licenses ?>"
+                                       data-price="<?= $activePlan->is_lifetime ? $activePlan->lifetime_price: $activePlan->annual_price ?>"
+                                       data-license-text="<?= $activePlan->data['text'] ?>">
                                         <span class="plan-price"
-                                              data-annual="<?php echo $plan->annual_price;?>"
-                                              data-lifetime="<?php echo $plan->lifetime_price;?>"
-                                              data-url="<?php echo $plan->url;?>">
-                                            $<?php echo $price;?>
+                                              data-annual="<?= $plan->annual_price ?>"
+                                              data-lifetime="<?= $plan->lifetime_price ?>"
+                                              data-url="<?= $plan->url ?>">
+                                            $<?= $price ?>
                                         </span>
                                         <?php if (!$activePlan->is_lifetime):?>
                                         <span class="plan-period">
-                                            <?php echo __('/per year');?>
+                                            <?= __('/per year') ?>
                                         </span>
                                         <?php endif;?>
                                     </p>
@@ -84,32 +84,32 @@
 
 	                        <?php if ( isset( $data['plan'] ) && !$activePlan ): ?>
                                 <?php foreach ( $data['plan'] as $plan ) : ?>
-                                    <p class="<?php echo $plan->licenses;?> <?php echo ($plan->licenses == 1) ? 'active':'hidden'; ?>">
+                                    <p class="<?= $plan->licenses ?> <?= ($plan->licenses == 1) ? 'active':'hidden' ?>">
                                         <span class="plan-price"
-                                              data-annual="<?php echo $plan->annual_price;?>"
-                                              data-lifetime="<?php echo $plan->lifetime_price;?>"
-                                              data-url="<?php echo $plan->url;?>">
-                                            $<?php echo $plan->annual_price;?>
+                                              data-annual="<?= $plan->annual_price ?>"
+                                              data-lifetime="<?= $plan->lifetime_price ?>"
+                                              data-url="<?= $plan->url ?>">
+                                            $<?= $plan->annual_price ?>
                                         </span>
                                         <span class="plan-period">
-                                            <?php echo __('/per year');?>
+                                            <?= __('/per year') ?>
                                         </span>
                                     </p>
                                 <?php endforeach;?>
 	                        <?php endif;?>
                         </div>
                         <p class="info">
-                            <?php echo $descriptions[$addon]; ?>
+                            <?= $descriptions[$addon]  ?>
                         </p>
 	                    <?php if ( !empty( $data['latest'] ) ) : ?>
                             <div class="developer-info">
                                 <span class="version-label">
-                                    <?php echo $translations['version']; ?>
+                                    <?= $translations['version'] ?>
                                 </span>
                                 <span>
-                                    <?php echo esc_html($data['latest']['version']); ?>
+                                    <?= esc_html($data['latest']['version']) ?>
                                     <a href="https://docs.stylemixthemes.com/bookit-calendar/changelog/" target="_blank">
-                                        <?php echo $translations['view_changelog']; ?>
+                                        <?= $translations['view_changelog'] ?>
                                     </a>
                                 </span>
                             </div>
@@ -118,11 +118,11 @@
 	                    <?php $firstPlan = reset($data['plan']); ?>
                         <?php if ( $activePlan && $activePlan->licenses == 25 && $activePlan->is_lifetime): ?>
                             <div class="exist-license">
-                                <span><?php echo sprintf( $translations['active_license'], $activePlan->data['text'] );?></span>
+                                <span><?= sprintf( $translations['active_license'], $activePlan->data['text'] ) ?></span>
                             </div>
                         <?php elseif ( $activePlan ):?>
                             <div class="exist-license">
-                                <span><?php echo sprintf( $translations['license_purchased'], $activePlan->data['text'], ( $activePlan->is_lifetime ) ? $translations['lifetime'] : '' );?></span>
+                                <span><?= sprintf( $translations['license_purchased'], $activePlan->data['text'], ( $activePlan->is_lifetime ) ? $translations['lifetime'] : '' ) ?></span>
                             </div>
                         <?php endif;?>
 
@@ -130,7 +130,7 @@
 	                    $customSelectCls = $addon;
                         if ( $activePlan && $activePlan->licenses == 25 && $activePlan->is_lifetime): ?>
                             <div class="action">
-                                <button class="active-addon"><?php echo $translations['active'];?></button>
+                                <button class="active-addon"><?= $translations['active'] ?></button>
                             </div>
                         <?php elseif( $activePlan ):?>
 
@@ -139,51 +139,51 @@
                                 if ( $activePlan->is_lifetime || ( !$activePlan->is_lifetime && $activePlan->licenses == 25 ) ):
 	                                $customSelectCls .= ' active-annual hidden';
                                 ?>
-                                    <button class="active-addon active-annual-btn"><?php echo $translations['active'];?></button>
+                                    <button class="active-addon active-annual-btn"><?= $translations['active'] ?></button>
 	                            <?php endif;?>
 
-                                <div class="custom-select <?php echo $customSelectCls;?>">
-                                    <div class="value" data-value="<?php echo $activePlan->licenses;?>">
-                                        <?php echo esc_html( $activePlan->data['text'] ); ?>
+                                <div class="custom-select <?= $customSelectCls ?>">
+                                    <div class="value" data-value="<?= $activePlan->licenses ?>">
+                                        <?= esc_html( $activePlan->data['text'] ); ?>
                                     </div>
                                     <div class="custom-options">
                                         <?php foreach ( $existPlans['annual'] as $plan ) : ?>
                                             <?php if ( $plan !== null ):?>
-                                            <span class="annual custom-option <?php echo ( $activePlan && $activePlan->id == $plan->id && !$activePlan->is_lifetime) ? 'disable':'';?>" data-value="<?php echo $plan->licenses;?>">
-                                                <?php echo esc_html($plan->data['text']); ?>
+                                            <span class="annual custom-option <?= ( $activePlan && $activePlan->id == $plan->id && !$activePlan->is_lifetime) ? 'disable':'' ?>" data-value="<?= $plan->licenses ?>">
+                                                <?= esc_html($plan->data['text']) ?>
                                             </span>
                                             <?php endif;?>
                                         <?php endforeach; ?>
 
 	                                    <?php foreach ( $existPlans['lifetime'] as $plan ) : ?>
 		                                    <?php if ( $plan !== null ):?>
-                                                <span class="lifetime hidden custom-option <?php echo ( $activePlan && $activePlan->id == $plan->id && $activePlan->is_lifetime) ? 'disable':'';?>" data-value="<?php echo $plan->licenses;?>">
-                                                <?php echo esc_html($plan->data['text']); ?>
+                                                <span class="lifetime hidden custom-option <?= ( $activePlan && $activePlan->id == $plan->id && $activePlan->is_lifetime) ? 'disable':''?>" data-value="<?= $plan->licenses?>">
+                                                <?= esc_html($plan->data['text']) ?>
                                                 </span>
 		                                    <?php endif;?>
 	                                    <?php endforeach; ?>
                                     </div>
                                 </div>
-                                <a data-license-url="<?php echo $activePlan->url;?>" target="_blank" class="buy <?php echo $addon.' '. $customSelectCls;?>" href="<?php echo esc_url($activePlan->url);?>">
-                                    <?php echo  $activePlan == false ? $translations['buy']: $translations['upgrade']; ?>
+                                <a data-license-url="<?= $activePlan->url ?>" target="_blank" class="buy <?= $addon.' '. $customSelectCls?>" href="<?= esc_url($activePlan->url)?>">
+                                    <?=  $activePlan == false ? $translations['buy']: $translations['upgrade'] ?>
                                 </a>
                             </div>
                         <?php else:?>
                             <div class="action">
                                 <div class="custom-select">
-                                    <div class="value" data-value="<?php echo $firstPlan->licenses;?>">
-					                    <?php echo esc_html( $firstPlan->data['text'] ); ?>
+                                    <div class="value" data-value="<?= $firstPlan->licenses?>">
+					                    <?= esc_html( $firstPlan->data['text'] ) ?>
                                     </div>
                                     <div class="custom-options">
 					                    <?php foreach ( $data['plan'] as $plan ) : ?>
-                                            <span class="custom-option <?php echo ( $activePlan && $activePlan->id == $plan->id ) ? 'disable':'';?>" data-value="<?php echo $plan->licenses;?>">
-                                            <?php echo esc_html($plan->data['text']); ?>
+                                            <span class="custom-option <?= ( $activePlan && $activePlan->id == $plan->id ) ? 'disable':''?>" data-value="<?= $plan->licenses?>">
+                                            <?= esc_html($plan->data['text']) ?>
                                             </span>
 					                    <?php endforeach; ?>
                                     </div>
                                 </div>
-                                <a target="_blank" class="buy <?php echo $customSelectCls;?>" href="<?php echo esc_url($firstPlan->url);?>">
-				                    <?php echo  $activePlan == false ? $translations['buy']: $translations['upgrade']; ?>
+                                <a target="_blank" class="buy <?= $customSelectCls?>" href="<?= esc_url($firstPlan->url)?>">
+				                    <?=  $activePlan == false ? $translations['buy']: $translations['upgrade'] ?>
                                 </a>
                             </div>
                         <?php endif;?>

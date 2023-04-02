@@ -5,10 +5,10 @@ add_action( 'admin_enqueue_scripts', function () {
 	wp_enqueue_script( 'stm-item-announcements-app', 'https://stylemixthemes.com/item-announcements/js/app.js', [], null, true );
 	wp_localize_script( 'stm-item-announcements-app', 'stmItemAnnouncements', [
 		'installedPlugins' => array_values( array_filter( scandir( WP_PLUGIN_DIR ), function ( $name ) {
-			return strpos( $name, '.' ) !== 0 && $name !== 'index.php';
+			return !str_starts_with($name, '.') && $name !== 'index.php';
 		} ) ),
 		'installedThemes' => array_values( array_filter( scandir( WP_CONTENT_DIR . '/themes' ), function ( $name ) {
-			return strpos( $name, '.' ) !== 0 && $name !== 'index.php';
+			return !str_starts_with($name, '.') && $name !== 'index.php';
 		} ) ),
 	] );
 } );

@@ -129,7 +129,7 @@ class StaffController extends DashboardController {
 			$errors['full_name'] = esc_html__('Full Name is required.', 'bookit');
 		}
 
-		if ( count($errors ) > 0 ) {
+		if ( is_countable($errors) && count($errors ) > 0 ) {
 			wp_send_json_error( ['errors' => $errors, 'message' => esc_html__('Error occurred!', 'bookit')] );
 		}
 	}

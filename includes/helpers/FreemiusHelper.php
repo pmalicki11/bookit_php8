@@ -154,7 +154,7 @@ class FreemiusHelper {
 		$license   = self::get_license( $plugin_id );
 
 		foreach ( $plans as $plan ) {
-			if ( $plan->name == 'premium' || $plan->name == 'bookit_all_addons') {
+			if ( $plan->name === 'premium' || $plan->name === 'bookit_all_addons') {
 				if ( isset( $plan->pricing ) ) {
 					foreach ( $plan->pricing as $pricing ) {
 						$plan_info[ 'licenses_' . $pricing->licenses ]      = $pricing;
@@ -290,7 +290,7 @@ class FreemiusHelper {
 
 
 	/**
-	 * @return array of exist addon licences
+	 * @return array|void of exist addon licences
 	 */
 	public static function get_exist_licenses() {
 		$result = [];
