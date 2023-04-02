@@ -12,7 +12,7 @@ function bookit_price( $price ) {
 	$settings           = \Bookit\Classes\Admin\SettingsController::get_settings();
 	$formatted_price    = number_format($price, $settings['decimals_number'], $settings['decimals_separator'], $settings['thousands_separator']);
 
-	if ( $settings['currency_position'] == 'left' ) {
+	if ( $settings['currency_position'] === 'left' ) {
 		$formatted_price = $settings['currency_symbol'] . $formatted_price;
 	} else {
 		$formatted_price .= $settings['currency_symbol'];
@@ -60,7 +60,7 @@ function bookit_data_to_list( $data, $key, $value, $elementor = false ) {
 		$list = [ esc_html__('Keep empty', 'bookit') => '' ];
 	}
 
-	if ( count($data) > 0 ) {
+	if ( is_countable($data) && count($data) > 0 ) {
 		foreach ( $data as $item ) {
 			$list[$item[$key]] = $item[$value];
 		}

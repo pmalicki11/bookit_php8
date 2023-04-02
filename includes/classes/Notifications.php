@@ -34,18 +34,25 @@ class Notifications {
 		return 'text/plain; charset=UTF-8';
 	}
 
-	public function check_sender_name( $original_name ) {
+    /**
+     * @param $original_name
+     * @return array|mixed
+     */
+    public static function check_sender_name($original_name ) {
 		$sender_name = get_option_by_path('bookit_settings.sender_name');
 
 		return !empty($sender_name) ? $sender_name : $original_name;
 	}
 
-	public function check_sender_email( $original_email ) {
+    /**
+     * @param $original_email
+     * @return array|mixed
+     */
+    public static function check_sender_email($original_email ) {
 		$sender_email = get_option_by_path('bookit_settings.sender_email');
 
 		return !empty($sender_email) ? $sender_email : $original_email;
 	}
-
 
 	/**
 	 * Sent Email

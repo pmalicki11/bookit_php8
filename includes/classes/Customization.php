@@ -41,19 +41,19 @@ class Customization {
 
 				if ( file_exists( $styles ) ) {
 					$new_colors[]       = BOOKIT_URL . 'assets/dist/';
-					$original_colors    = array(
+					$original_colors    = [
 						'#066',
 						'#f0f8f8',
 						'#ffd400',
 						'#fff',
 						'#272727',
 						'../../'
-					);
+                    ];
 
 					$css = str_replace( $original_colors, $new_colors, file_get_contents($styles) );
 					$wp_filesystem->put_contents( $upload_dir . '/app.css', $css, FS_CHMOD_FILE );
 
-					$version = intval( get_option( 'bookit_styles_version', 1 ) ) + 1;
+					$version = (int)get_option('bookit_styles_version', 1) + 1;
 					update_option( 'bookit_styles_version', $version );
 				}
 			}

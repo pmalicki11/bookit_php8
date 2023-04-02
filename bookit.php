@@ -38,25 +38,23 @@ if ( ! function_exists( 'bookit_fs' ) ) {
 				require_once WP_CONTENT_DIR . '/plugins/bookit/libs/freemius/start.php';
 			}
 
-			$bookit_fs = fs_dynamic_init(
-				array(
-					'id'             => '8486',
-					'slug'           => 'bookit',
-					'type'           => 'plugin',
-					'public_key'     => 'pk_2cc14bc8c7ec47520d21f0b7d99e7',
-					'is_premium'     => false,
-					'has_addons'     => true,
-					'has_paid_plans' => false,
-					'menu'           => array(
-						'slug'       => 'bookit',
-						'first-path' => 'admin.php?page=bookit-settings',
-						'account'    => true,
-						'contact'    => true,
-						'support'    => false,
-						'addons'     => false,
-					),
-				)
-			);
+			$bookit_fs = fs_dynamic_init([
+                'id'             => '8486',
+				'slug'           => 'bookit',
+				'type'           => 'plugin',
+				'public_key'     => 'pk_2cc14bc8c7ec47520d21f0b7d99e7',
+				'is_premium'     => false,
+				'has_addons'     => true,
+				'has_paid_plans' => false,
+				'menu'           => [
+					'slug'       => 'bookit',
+					'first-path' => 'admin.php?page=bookit-settings',
+					'account'    => true,
+					'contact'    => true,
+					'support'    => false,
+					'addons'     => false,
+                ],
+            ]);
 		}
 
 		return $bookit_fs;
@@ -71,15 +69,15 @@ if ( ! function_exists( 'bookit_fs' ) ) {
 		require_once BOOKIT_PATH . '/includes/item-announcements.php';
 		require_once BOOKIT_LIBS_PATH . 'admin-notification/admin-notification.php';
 
-		$init_data = array(
+		$init_data = [
 			'plugin_title' => 'Bookit',
 			'plugin_name'  => 'bookit',
 			'plugin_file'  => BOOKIT_FILE,
 			'logo'         => BOOKIT_URL . 'assets/images/icon-100x100.png',
-		);
+        ];
 		stm_admin_notification_init( $init_data );
 	}
-	call_user_func( array( 'Bookit\Classes\Base\Plugin', 'run' ) );
+	Bookit\Classes\Base\Plugin::run();
 }
 
 function my_after_upgrade_addon_sync( $prev_version, $new_version ) {
@@ -91,7 +89,7 @@ function my_after_upgrade_addon_sync( $prev_version, $new_version ) {
 
 $bookit_fs = bookit_fs();
 $bookit_fs->add_action( 'plugin_version_update', 'my_after_upgrade_addon_sync' );
-$bookit_fs->add_action( 'after_uninstall', array( \Bookit\Classes\Base\Plugin::class, 'uninstall' ) );
+$bookit_fs->add_action( 'after_uninstall', [\Bookit\Classes\Base\Plugin::class, 'uninstall']);
 
 /**
  * remove duplicates 'contact us'

@@ -136,7 +136,7 @@ class MailTemplateHelper {
 	/** add email templates to wpml single strings */
 	public static function registerTemplateDataToWPMLStrings() {
 		if ( has_action('wpml_register_single_string') ) {
-			$emailTemplates  = get_option_by_path( 'bookit_settings.emails', (object) [] );
+			$emailTemplates  = get_option_by_path( 'bookit_settings.emails' );
 			foreach ( $emailTemplates as $templateTitle => $template ) {
 				do_action('wpml_register_single_string', 'bookit', $templateTitle . '_subject', $template['subject']);
 				do_action('wpml_register_single_string', 'bookit', $templateTitle . '_body', $template['body']);

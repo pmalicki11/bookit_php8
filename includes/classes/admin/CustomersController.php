@@ -64,7 +64,7 @@ class CustomersController extends DashboardController {
 				( isset( $data['sort'] ) && in_array( $data['sort'], self::$sortFields ) ) ? $data['sort'] : '',
 				( isset( $data['order'] ) && in_array( $data['order'], ['asc', 'desc']) ) ? $data['order'] : ''
 			);
-			$response['total'] = ( ! empty( $data['search'] ) ) ? count($response['customers']) : Customers::get_count();
+			$response['total'] = ( !empty($data['search']) && is_countable($response['customers'])) ? count($response['customers']) : Customers::get_count();
 
 			wp_send_json_success( $response );
 		}
@@ -120,7 +120,7 @@ class CustomersController extends DashboardController {
 			}
 		}
 
-		if ( count($errors ) > 0 ) {
+		if ( is_countable($errors ) && count($errors ) > 0 ) {
 			wp_send_json_error( ['errors' => $errors, 'message' => __('Error occurred!', 'bookit')] );
 		}
 	}

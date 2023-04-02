@@ -90,7 +90,7 @@ class SettingsController extends DashboardController {
 			$errors['currency'] = esc_html__('Wrong currency value', 'bookit');
 		}
 
-		if ( count($errors ) > 0 ) {
+		if ( is_countable($errors) && count($errors) > 0 ) {
 			wp_send_json_error( ['errors' => $errors, 'message' => __('Error occurred!', 'bookit')] );
 		}
 	}

@@ -12,19 +12,18 @@ use Bookit\Classes\Admin\SettingsController;
 class TimeSlotHelper {
 
 	/** slot length **/
-	const TIME_SLOT_POSSIBLE_VALUES = [
+	public const TIME_SLOT_POSSIBLE_VALUES = [
 		'15_minutes' => 15,
 		'20_minutes' => 20,
 		'30_minutes' => 30,
 		'45_minutes' => 45,
 		'1_hour' => 60
 	];
-	const DAY_IN_SECONDS = 60 * 60 * 24;
+	public const DAY_IN_SECONDS = 60 * 60 * 24;
 
 	/**
 	 * @param integer $start - time in seconds
 	 * @param integer $end - time in seconds
-	 * @param string $type - possible values "default|admin"
 	 */
 	public static function getTimeList($start, $end) {
 		$result             = [];

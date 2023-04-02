@@ -59,7 +59,7 @@ class Staff extends DatabaseModel {
 
         $services = [];
         /** append staff service data */
-        if ( count($staffList) > 0 ){
+        if ( is_countable($staffList) && count($staffList) > 0 ){
             $services = Staff_Services::get_staff_services(array_column($staffList, 'id'));
         }
 

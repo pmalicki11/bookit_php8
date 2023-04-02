@@ -197,9 +197,9 @@ class ImportExportController {
 				$result  = true;
 				update_option( 'bookit_import_file', $file_url );
 				$file_data['settings']   = 0;
-				$file_data['categories'] = count( $json['Categories'] );
-				$file_data['service']    = count( $json['Service'] );
-				$file_data['staff']      = count( $json['Staff'] );
+				$file_data['categories'] = is_countable($json['Categories']) ? count( $json['Categories'] ) : 0;
+				$file_data['service']    = is_countable($json['Service']) ? count( $json['Service'] ) : 0;
+				$file_data['staff']      = is_countable($json['Staff']) ? count( $json['Staff'] ) : 0;
 			}
 		}
 
